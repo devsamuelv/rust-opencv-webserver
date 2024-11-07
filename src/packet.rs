@@ -1,4 +1,5 @@
-use futures_core::Stream;
+use futures::stream::{Stream, StreamExt};
+
 use rocket::http::ContentType;
 use rocket::response::stream::ReaderStream;
 use rocket::response::{self, Responder};
@@ -21,8 +22,13 @@ where
 {
     fn respond_to(self, _: &'r Request<'_>) -> response::Result<'r> {
         Response::build()
-            .header(ContentType::Binary)
+            .header(ContentType::JPEG)
             .streamed_body(ReaderStream::from(self.0.map(std::io::Cursor::new)))
             .ok()
     }
 }
+
+#[macro_export]
+macro_rules! CameraStream {
+        ($($s:tt)*) => (!rocket::response::stream::stream!(CameraStream, $($s)*));
+    }

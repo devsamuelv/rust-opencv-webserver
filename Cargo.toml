@@ -19,3 +19,5 @@ http = "1"
 futures-util = { version = "0.3", default-features = false }
 hyper-util = "0.1.6"
 futures-core = "0.3.31"
+tokio-stream = "0.1.16"
+futures = "0.3.31"
